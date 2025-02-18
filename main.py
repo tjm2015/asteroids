@@ -29,6 +29,7 @@ def main():
 
     player = Player(x=SCREEN_WIDTH / 2, y=SCREEN_HEIGHT / 2)
     asteroid_field = AsteroidField()
+    kill_counter = 0
 
     # Create game loop
     while True:
@@ -42,13 +43,15 @@ def main():
         # Check if the player runs into any of the asteroids
         for obj in asteroids:
             if player.collision(obj):
-                print("Game over!")
+                print(f"Game over! You had {kill_counter} kills.")
                 sys.exit()
 
         for asteroid in asteroids:
             for shot in shots:
                 if asteroid.collision(shot):
-                    asteroid.kill()
+                    asteroid.split()
+                    shot.kill()
+                    kill_counter += 1
 
         screen.fill(color="black")
 
